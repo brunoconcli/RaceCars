@@ -1,6 +1,6 @@
 import { type RaceCar } from "@core/entities"
 
-export interface TCreateRaceCarDTO {
+export interface ICreateRaceCarDTO {
   readonly name: RaceCar["name"]
   readonly brandId: RaceCar["brandId"]
   readonly year: RaceCar["year"]
@@ -9,5 +9,5 @@ export interface TCreateRaceCarDTO {
 }
 
 export interface ICreateRaceCar {
-  create: (data: TCreateRaceCarDTO) => Promise<RaceCar>
+  create: (data: ICreateRaceCarDTO) => Promise<RaceCar>
 }
