@@ -2,5 +2,5 @@ export interface Brand {
   id: number
   name: string
   country: string
-  inauguratedAt: Date
+  inauguratedIn: Date // how about only the year? (number)
 }
