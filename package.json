@@ -1,13 +1,13 @@
 {
   "name": "name-of-the-project",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/main/server.ts",
   "author": "Miguel Lopes Braido <miguellopesbraido@gmail.com>",
   "private": true,
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/server.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/main/server.ts",
     "test": "jest"
   },
   "devDependencies": {
@@ -37,5 +37,7 @@
     "zod": "^3.21.4"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.3.0"
   }
 }
