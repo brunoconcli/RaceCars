@@ -8,7 +8,7 @@ export interface ICommunicateDTO {
   readonly date: Date
 }
 
-export default class CommunicateDTO {
+export class CommunicateDTO {
   private hash: string
   private message: string
   private data?: any
