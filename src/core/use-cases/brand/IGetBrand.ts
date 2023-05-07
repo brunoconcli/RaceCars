@@ -1,13 +1,12 @@
+import { IFindSearchBrandRepository } from "@app/ports/repositories"
+import { IFindSearchBrandRepositoryDTO } from "@app/ports/repositories"
 import { type Brand } from "@core/entities"
 
 export interface IGetBrandByIdDTO {
   readonly id: Brand["id"]
 }
 
-export interface IGetBrandsSearchDTO {
-  readonly name?: Brand["name"]
-  readonly country?: Brand["country"]
-  readonly inauguratedIn?: Brand["inauguratedIn"][]
+export interface IGetBrandsSearchDTO extends IFindSearchBrandRepositoryDTO {
   readonly filter: {
     readonly order: "ASC" | "DESC"
     readonly limit: number

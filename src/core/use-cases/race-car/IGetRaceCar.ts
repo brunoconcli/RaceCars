@@ -1,15 +1,10 @@
+import { IFindSearchRaceCarRepositoryDTO } from "@app/ports/repositories"
 import { type RaceCar } from "@core/entities"
 
 export interface IGetRaceCarByIdDTO {
   readonly id: RaceCar["id"]
 }
-export interface IGetRaceCarsSearchDTO {
-  readonly name?: RaceCar["name"]
-  readonly brand?: RaceCar["brandId"]
-  readonly color?: RaceCar["color"]
-  readonly year?: RaceCar["year"][]
-  readonly priceMax?: RaceCar["price"]
-  readonly priceMin?: RaceCar["price"]
+export interface IGetRaceCarsSearchDTO extends IFindSearchRaceCarRepositoryDTO {
   readonly filter: {
     readonly order: "ASC" | "DESC"
     readonly limit: number
