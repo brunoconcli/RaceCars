@@ -1,19 +1,12 @@
 import { type IUniqueIdProvider } from "@app/ports/providers/unique-id-provider"
 
-export interface ICommunicateDTO {
-  readonly hash: string
-  readonly code: number
-  readonly message: string
-  readonly data?: any
-  readonly date: Date
-}
-
-export class CommunicateDTO extends Error {
-  private hash: string
-  readonly message: string
-  private readonly data?: any
-  private readonly code: number
-  private readonly date: Date
+import { type ICommunicateDTO } from "."
+export class CommunicateDTO {
+  private hash: ICommunicateDTO["hash"]
+  private readonly message: ICommunicateDTO["message"]
+  private readonly code: ICommunicateDTO["code"]
+  private readonly date: ICommunicateDTO["date"]
+  private readonly data: ICommunicateDTO["data"]
 
   constructor(
     message: ICommunicateDTO["message"],
@@ -21,7 +14,6 @@ export class CommunicateDTO extends Error {
     uuid: IUniqueIdProvider,
     data?: ICommunicateDTO["data"]
   ) {
-    super()
     uuid
       .generate()
       .then((hash) => (this.hash = hash))
@@ -40,7 +32,7 @@ export class CommunicateDTO extends Error {
       code: this.code,
       message: this.message,
       data: this.data,
-      date: this.date
+      date: this.date,
     }
   }
 }
