@@ -1,4 +1,4 @@
 export interface IResponse {
   statusCode: number
-  body?: object
+  body?: object | string
 }
