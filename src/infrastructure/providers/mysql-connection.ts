@@ -1,4 +1,4 @@
-import { credentialDB } from "@main/configuration/crendential-DB"
+import { credentialDB } from "@main/configuration"
 import mysql from "mysql2/promise"
 
 let connection: mysql.Connection
