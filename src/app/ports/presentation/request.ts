@@ -4,5 +4,7 @@ export interface IRequest {
   parameters?: any
   query?: any
   headers?: any
+  method: string
+  url: string
   ip: string
 }
