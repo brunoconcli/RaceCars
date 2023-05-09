@@ -1,10 +1,6 @@
 import { getConnection } from "@infra/providers"
-import cors from "cors"
-import express from "express"
 
-import { adaptMiddlewareExpress } from "./adapters"
-import { LogMiddleware } from "./factories/middlewares"
-import routes from "./routes"
+import { setUpApp } from "./configuration/app-configuration"
 
 async function initializeServer(): Promise<void> {
   await getConnection()
@@ -15,13 +11,7 @@ async function initializeServer(): Promise<void> {
       console.log(error)
     })
 
-  const app = express()
-
-  app.use(cors())
-  app.use(express.json())
-
-  app.use(adaptMiddlewareExpress(new LogMiddleware()))
-  app.use(routes)
+  const app = setUpApp()
 
   app.listen(3030, () => {
     console.log("Server is running")
