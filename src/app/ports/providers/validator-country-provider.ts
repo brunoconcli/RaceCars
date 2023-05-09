@@ -1,3 +1,3 @@
 export interface IValidatorCountryProvider {
-  validate(country: string): boolean
+  validate: (country: string) => boolean
 }

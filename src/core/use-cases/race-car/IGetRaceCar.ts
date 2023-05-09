@@ -1,5 +1,7 @@
-import { IFindSearchRaceCarRepositoryDTO } from "@app/ports/repositories"
 import { type RaceCar } from "@core/entities"
+
+import { type IFindSearchRaceCarRepositoryDTO } from "@app/ports/repositories"
+
 
 export interface IGetRaceCarByIdDTO {
   readonly id: RaceCar["id"]

@@ -1,16 +1,27 @@
-import { IDeleteBrandRepository } from "./delete"
-import { ISaveBrandRepository } from "./save"
-import { IUpdateBandRepository } from "./update"
-import { IFindAllBrandRepository } from "./find-all"
-import { IFindByIdBrandRepository } from "./find-by-id"
-import { IFindSearchBrandRepository, IFindSearchBrandRepositoryDTO } from "./find-search"
+import { type IDeleteBrandRepository } from "./delete"
+import { type IFindAllBrandRepository } from "./find-all"
+import { type IFindByIdBrandRepository } from "./find-by-id"
+import {
+  type IFindSearchBrandRepository,
+  type IFindSearchBrandRepositoryDTO,
+} from "./find-search"
+import { type ISaveBrandRepository } from "./save"
+import { type IUpdateBandRepository } from "./update"
 
-type IBrandRepository = IDeleteBrandRepository & ISaveBrandRepository &
-  IUpdateBandRepository & IFindAllBrandRepository & IFindByIdBrandRepository &
+type IBrandRepository = IDeleteBrandRepository &
+  ISaveBrandRepository &
+  IUpdateBandRepository &
+  IFindAllBrandRepository &
+  IFindByIdBrandRepository &
   IFindSearchBrandRepository
-export {
+
+export type {
   IBrandRepository,
-  IDeleteBrandRepository, ISaveBrandRepository, IUpdateBandRepository,
-  IFindAllBrandRepository, IFindByIdBrandRepository, IFindSearchBrandRepository,
-  IFindSearchBrandRepositoryDTO
+  IDeleteBrandRepository,
+  ISaveBrandRepository,
+  IUpdateBandRepository,
+  IFindAllBrandRepository,
+  IFindByIdBrandRepository,
+  IFindSearchBrandRepository,
+  IFindSearchBrandRepositoryDTO,
 }
