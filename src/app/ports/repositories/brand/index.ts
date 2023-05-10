@@ -6,11 +6,11 @@ import {
   type IFindSearchBrandRepositoryDTO,
 } from "./find-search"
 import { type ISaveBrandRepository } from "./save"
-import { type IUpdateBandRepository } from "./update"
+import { type IUpdateBrandRepository } from "./update"
 
 type IBrandRepository = IDeleteBrandRepository &
   ISaveBrandRepository &
-  IUpdateBandRepository &
+  IUpdateBrandRepository &
   IFindAllBrandRepository &
   IFindBrandByIdRepository &
   IFindSearchBrandRepository
@@ -19,7 +19,7 @@ export type {
   IBrandRepository,
   IDeleteBrandRepository,
   ISaveBrandRepository,
-  IUpdateBandRepository,
+  IUpdateBrandRepository,
   IFindAllBrandRepository,
   IFindBrandByIdRepository,
   IFindSearchBrandRepository,
