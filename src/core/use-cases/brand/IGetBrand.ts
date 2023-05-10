@@ -24,5 +24,5 @@ export interface IGetBrandsSearch {
 }
 
 export interface IGetAllBrands {
-  getAllBrands: () => Promise<Brand>
+  getAllBrands: () => Promise<Brand[]>
 }
