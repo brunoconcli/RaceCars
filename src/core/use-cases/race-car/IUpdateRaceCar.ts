@@ -1,6 +1,6 @@
 import { type RaceCar } from "@core/entities"
 
-export interface IUpdataRaceCarDTO {
+export interface IUpdateRaceCarDTO {
   readonly id: RaceCar["id"]
   readonly name?: RaceCar["name"]
   readonly brand?: RaceCar["brandId"]
@@ -10,5 +10,5 @@ export interface IUpdataRaceCarDTO {
 }
 
 export interface IUpdateRaceCar {
-  updata: (data: IUpdataRaceCarDTO) => Promise<RaceCar>
+  update: (data: IUpdateRaceCarDTO) => Promise<RaceCar>
 }
