@@ -10,5 +10,5 @@ export interface IFindSearchRaceCarRepositoryDTO {
 }
 
 export interface IFindSearchRaceCarRepository {
-  findSearch: (search: string) => Promise<RaceCar[]>
+  findSearch: (search: IFindSearchRaceCarRepositoryDTO) => Promise<RaceCar[]>
 }
