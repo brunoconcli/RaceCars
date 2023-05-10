@@ -1,9 +1,9 @@
 import { type IUniqueIdProvider } from "@app/ports/providers/unique-id-provider"
 
 import { type ICommunicateDTO } from "."
-export class CommunicateDTO {
+export class CommunicateDTO extends Error {
   private hash: ICommunicateDTO["hash"]
-  private readonly message: ICommunicateDTO["message"]
+  message: ICommunicateDTO["message"]
   private readonly code: ICommunicateDTO["code"]
   private readonly date: ICommunicateDTO["date"]
   private readonly data: ICommunicateDTO["data"]
@@ -14,6 +14,7 @@ export class CommunicateDTO {
     uuid: IUniqueIdProvider,
     data?: ICommunicateDTO["data"]
   ) {
+    super()
     uuid
       .generate()
       .then((hash) => (this.hash = hash))
