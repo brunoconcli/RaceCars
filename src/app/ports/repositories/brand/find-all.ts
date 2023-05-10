@@ -1,5 +1,5 @@
 import { type Brand } from "@core/entities"
 
-export interface IFindAllBrandRepository {
+export interface IFindAllBrandsRepository {
   findAll: () => Promise<Brand[]>
 }
