@@ -1,6 +1,6 @@
 import { type IDeleteRaceCarRepository } from "./delete"
 import { type IFindAllRaceCarRepository } from "./find-all"
-import { type IFindByIdRaceCarRepository } from "./find-by-id"
+import { type IFindRaceCarByIdRepository } from "./find-by-id"
 import {
   type IFindSearchRaceCarRepository,
   type IFindSearchRaceCarRepositoryDTO,
@@ -12,7 +12,7 @@ type IRaceCarRepository = IDeleteRaceCarRepository &
   ISaveRaceCarRepository &
   IUpdateRaceCarRepository &
   IFindAllRaceCarRepository &
-  IFindByIdRaceCarRepository &
+  IFindRaceCarByIdRepository &
   IFindSearchRaceCarRepository
 
 export type {
@@ -21,7 +21,7 @@ export type {
   ISaveRaceCarRepository,
   IUpdateRaceCarRepository,
   IFindAllRaceCarRepository,
-  IFindByIdRaceCarRepository,
+  IFindRaceCarByIdRepository,
   IFindSearchRaceCarRepository,
   IFindSearchRaceCarRepositoryDTO,
 }

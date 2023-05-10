@@ -1,5 +1,5 @@
 import { type RaceCar } from "@core/entities"
 
-export interface IFindByIdRaceCarRepository {
+export interface IFindRaceCarByIdRepository {
   findById: (id: RaceCar["id"]) => Promise<RaceCar>
 }
