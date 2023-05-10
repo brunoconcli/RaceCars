@@ -23,5 +23,5 @@ export interface IGetRaceCarsSearch {
 }
 
 export interface IGetAllRaceCars {
-  getAllRaceCars: () => Promise<RaceCar>
+  getAllRaceCars: () => Promise<RaceCar[]>
 }
