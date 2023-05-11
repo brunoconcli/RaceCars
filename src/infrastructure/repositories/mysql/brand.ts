@@ -11,7 +11,12 @@ import joinModularValues from "./join-modular-values"
 export class BrandRepository implements IBrandRepository {
   async delete(id: number): Promise<void> {
     const connection = await getConnection()
-    await connection.execute("DELETE FROM Brand WHERE id = ?", [id])
+    await connection
+      .execute("DELETE FROM Brand WHERE id = ?", [id])
+      .then(() => {})
+      .catch(() => {
+        throw new Error("Error on delete brand")
+      })
   }
 
   async save(data: Omit<Brand, "id">): Promise<Brand> {
@@ -37,28 +42,34 @@ export class BrandRepository implements IBrandRepository {
     })[0]
   }
 
-  async update(id: number, data: Partial<Omit<Brand, "id">>): Promise<void> {
+  async update(id: number, data: Partial<Omit<Brand, "id">>): Promise<Brand> {
     const connection = await getConnection()
     const query =
       "UPDATE Brand SET " + joinModularValues(data) + " WHERE id = ?"
 
     await connection.execute(query, [id])
+
+    return await this.findById(id)
   }
 
   async findAll(): Promise<Brand[]> {
     const connection = await getConnection()
-    await connection.execute("SELECT * FROM Brand", (err, results) => {
-      if (err) throw new Error("Error on find all brands")
-
-      return results as Brand[]
-    })
-    return []
+    return await connection
+      .execute("SELECT * FROM Brand")
+      .then((results) => results[0] as Brand[])
+      .catch(() => {
+        throw new Error("Error on find all brands")
+      })
   }
 
   async findById(id: number): Promise<Brand> {
     const connection = await getConnection()
-    await connection.query("SELECT * FROM Brand WHERE id = ?", [id])
-    return null
+    return await connection
+      .query("SELECT * FROM Brand WHERE id = ?", [id])
+      .then((results) => results[0][0] as Brand)
+      .catch(() => {
+        throw new Error("Error on find brand by id")
+      })
   }
 
   async findSearch(data: IFindSearchBrandRepositoryDTO): Promise<Brand[]> {
