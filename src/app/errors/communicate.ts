@@ -1,27 +1,20 @@
-import { type IUniqueIdProvider } from "@app/ports/providers/unique-id-provider"
-
 import { type ICommunicateDTO } from "."
 export class CommunicateDTO extends Error {
-  private hash: ICommunicateDTO["hash"]
   message: ICommunicateDTO["message"]
   private readonly code: ICommunicateDTO["code"]
+  private readonly type: ICommunicateDTO["type"]
   private readonly date: ICommunicateDTO["date"]
   private readonly data: ICommunicateDTO["data"]
 
   constructor(
-    message: ICommunicateDTO["message"],
+    type: ICommunicateDTO["type"],
     code: ICommunicateDTO["code"],
-    uuid: IUniqueIdProvider,
+    message: ICommunicateDTO["message"],
     data?: ICommunicateDTO["data"]
   ) {
     super()
-    uuid
-      .generate()
-      .then((hash) => (this.hash = hash))
-      .catch((err) => {
-        throw new Error(err)
-      })
     this.code = code
+    this.type = type
     this.message = message
     this.data = data
     this.date = new Date()
@@ -29,8 +22,8 @@ export class CommunicateDTO extends Error {
 
   getObject(): ICommunicateDTO {
     return {
-      hash: this.hash,
       code: this.code,
+      type: this.type,
       message: this.message,
       data: this.data,
       date: this.date,

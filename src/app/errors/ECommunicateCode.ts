@@ -3,4 +3,5 @@ export enum ECommunicateCode {
   "InE" = "Error Internal",
   "DBE" = "Database Error",
   "InA" = "Incorrect Action",
+
 }
