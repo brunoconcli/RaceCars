@@ -14,10 +14,27 @@ export class BrandRepository implements IBrandRepository {
     await connection.execute("DELETE FROM Brand WHERE id = ?", [id])
   }
 
-  async save(data: Omit<Brand, "id">): Promise<void> {
+  async save(data: Omit<Brand, "id">): Promise<Brand> {
+    if (
+      (
+        await this.findSearch({
+          country: data.country,
+          name: data.name,
+          inauguratedIn: [data.inauguratedIn],
+        })
+      ).length > 0
+    )
+      throw new Error("Brand already exists")
     const connection = await getConnection()
-    const query = "INSERT INTO Brand VALUES (" + joinModularValues(data) + ")"
-    await connection.execute(query)
+    await connection.execute(
+      "INSERT INTO Brand (name, country, inauguratedIn) VALUES (?, ?, ?)",
+      [data.name, data.country, data.inauguratedIn]
+    )
+    return await this.findSearch({
+      country: data.country,
+      name: data.name,
+      inauguratedIn: [data.inauguratedIn],
+    })[0]
   }
 
   async update(id: number, data: Partial<Omit<Brand, "id">>): Promise<void> {
@@ -46,12 +63,24 @@ export class BrandRepository implements IBrandRepository {
 
   async findSearch(data: IFindSearchBrandRepositoryDTO): Promise<Brand[]> {
     const connection = await getConnection()
-    const query = "SELECT * FROM Brand WHERE " + joinModularValues(data)
-    await connection.query(query, (err, results) => {
-      if (err) throw new Error("Error on find search brands")
+    const query =
+      "SELECT * FROM Brand WHERE " +
+      joinModularValues(
+        { country: data.country, name: data.name },
+        true,
+        " AND "
+      ) +
+      `${
+        Array.isArray(data.inauguratedIn)
+          ? " AND inauguratedIn = " + data.inauguratedIn.join(" OR ")
+          : ""
+      }`
 
-      return results as Brand[]
-    })
-    return []
+    return await connection
+      .query(query)
+      .then((results) => results[0] as Brand[])
+      .catch(() => {
+        throw new Error("Error on find search brands")
+      })
   }
 }
