@@ -1,6 +1,7 @@
 import { type Brand } from "@core/entities"
 import { type ICreateBrand, type ICreateBrandDTO } from "@core/use-cases"
 
+import { CommunicateDTO, ECommunicateCode } from "@app/errors"
 import {
   type IFindSearchBrandRepository,
   type ISaveBrandRepository,
@@ -19,7 +20,12 @@ export class CreateBrand implements ICreateBrand {
         country: data.country,
       })
     )
-      throw new Error("This brand already exists")
+      throw new CommunicateDTO(
+        ECommunicateCode.InA,
+        400,
+        "Brand already exists",
+        data
+      )
 
     return await this.saveBrandRepository.save(data)
   }
