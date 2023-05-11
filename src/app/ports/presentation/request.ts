@@ -1,7 +1,7 @@
 export interface IRequest {
   hourRequest?: Date
   body?: any
-  parameters?: any
+  params?: any
   query?: any
   headers?: any
   method: string
