@@ -58,7 +58,7 @@ export class BrandRepository implements IBrandRepository {
       .execute("SELECT * FROM Brand")
       .then((results) => results[0] as Brand[])
       .catch(() => {
-        throw new Error("Error on find all brands")
+        throw new Error("Error in finding all brands")
       })
   }
 
