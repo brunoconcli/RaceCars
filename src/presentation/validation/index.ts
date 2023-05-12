@@ -1,2 +1,2 @@
 export * from "./composite"
-export * from "./required-field"
+export * from "./required-and-type-field"
