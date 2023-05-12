@@ -15,10 +15,12 @@ export class CreateBrand implements ICreateBrand {
 
   async create(data: ICreateBrandDTO): Promise<Brand> {
     if (
-      await this.findSearchBrandRepository.findSearch({
-        name: data.name,
-        country: data.country,
-      })
+      (
+        await this.findSearchBrandRepository.findSearch({
+          name: data.name,
+          country: data.country,
+        })
+      ).length > 0
     )
       throw new CommunicateDTO(
         ECommunicateCode.InA,
