@@ -1,3 +1,5 @@
+import { type IResponse } from "@app/ports/presentation"
+
 import { type ICommunicateDTO } from "."
 export class CommunicateDTO extends Error {
   message: ICommunicateDTO["message"]
@@ -27,6 +29,18 @@ export class CommunicateDTO extends Error {
       message: this.message,
       data: this.data,
       date: this.date,
+    }
+  }
+
+  getObjectResponse(): IResponse {
+    return {
+      statusCode: this.code,
+      body: {
+        message: this.message,
+        type: this.type,
+        date: this.date,
+        data: this.data,
+      },
     }
   }
 }
