@@ -1,5 +1,5 @@
-import { type ICommunicateDTO } from "@app/errors"
+import { type CommunicateDTO } from "@app/errors"
 
 export interface IValidator {
-  validate: (data: object) => ICommunicateDTO | undefined
+  validate: (data: object) => CommunicateDTO | undefined
 }
