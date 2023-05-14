@@ -7,15 +7,11 @@ import {
 export class LogMiddleware implements IMiddleware {
   handle(req: IRequest, next: () => void): IResponse | any {
     console.time("duration")
-    console.log(
-      "Iniciou  o processamento da requisição " + req.method + " em " + req.url
-    )
+    console.log("Initiating " + req.method + " request on " + req.url)
 
     next()
 
-    console.log(
-      "Terminou o processamento da requisição " + req.method + " em " + req.url
-    )
+    console.log("Finished " + req.method + " request on " + req.url)
     console.timeEnd("duration")
   }
 }
