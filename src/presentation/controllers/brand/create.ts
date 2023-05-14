@@ -8,7 +8,6 @@ import {
   type IValidator,
 } from "@app/ports/presentation"
 
-
 export class CreateBrandController implements IController {
   constructor(
     private readonly useCase: ICreateBrand,
@@ -18,7 +17,7 @@ export class CreateBrandController implements IController {
   async handle(request: IRequest): Promise<IResponse> {
     try {
       const error = this.bodyValidate.validate(request.body)
-      if (error) return error.getObjectResponse()
+      if (error) throw error
       return {
         statusCode: 201,
         body: {
