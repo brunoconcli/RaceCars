@@ -10,12 +10,12 @@ export class TypeFieldVerification<T> implements IValidator {
   ) {}
 
   validate(data: object): CommunicateDTO {
-    if (
-      !this.type ||
-      (this.type === "object" &&
-        !(data[this.fieldName] instanceof this.typeObject)) ||
-      typeof data[this.fieldName] !== this.type
-    )
-      return IncorrectTypeError(this.fieldName)
+    if (data[this.fieldName])
+      if (
+        (!this.typeObject &&
+          !(data[this.fieldName] instanceof this.typeObject)) ||
+        typeof data[this.fieldName] !== this.type
+      )
+        return IncorrectTypeError(this.fieldName)
   }
 }
