@@ -79,7 +79,8 @@ export class BrandRepository implements IBrandRepository {
       joinModularValues(
         { country: data.country, name: data.name },
         true,
-        " AND "
+        " AND ",
+        " LIKE "
       ) +
       `${
         Array.isArray(data.inauguratedIn)
