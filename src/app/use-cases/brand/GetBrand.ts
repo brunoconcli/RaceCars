@@ -7,6 +7,7 @@ import {
   type IGetAllBrands,
 } from "@core/use-cases"
 
+import { CommunicateDTO, ECommunicateCode } from "@app/errors"
 import {
   type IFindBrandByIdRepository,
   type IFindAllBrandsRepository,
@@ -27,14 +28,38 @@ export class GetBrand
   }
 
   async getBrandsSearch(data: IGetBrandsSearchDTO): Promise<Brand[]> {
-    return await this.findSearchBrandRepository.findSearch(data)
+    const brand = await this.findSearchBrandRepository.findSearch(data)
+
+    const filter = data.filter
+
+    brand.sort((a, b) =>
+      filter.order === "ASC"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name)
+    )
+
+    const brandFiltred = []
+
+    for (
+      let i = filter.offset * filter.limit;
+      i < filter.offset * filter.limit + filter.limit;
+      i++
+    ) {
+      if (brand[i] === undefined) break
+      brandFiltred.push(brand[i])
+    }
+
+    return brandFiltred
   }
 
   async getBrandById(data: IGetBrandByIdDTO): Promise<Brand> {
     const brand = await this.findBrandByIdRepository.findById(data.id)
-
-    if (!brand) throw new Error("The brand id passed does not exist")
-
+    if (!brand)
+      throw new CommunicateDTO(
+        ECommunicateCode.DBE,
+        401,
+        "there is no brand that contains this id"
+      )
     return brand
   }
 }
