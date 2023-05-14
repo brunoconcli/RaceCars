@@ -3,6 +3,7 @@ import { getConnection } from "@infra/providers"
 import { setUpApp } from "./configuration/app-configuration"
 
 async function initializeServer(): Promise<void> {
+  console.time("start_server")
   await getConnection()
     .then(() => {
       console.log("Database is running")
@@ -14,7 +15,7 @@ async function initializeServer(): Promise<void> {
   const app = setUpApp()
 
   app.listen(3030, () => {
-    console.log("Server is running")
+    console.timeLog("start_server")
   })
 }
 
