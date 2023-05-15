@@ -1,17 +1,20 @@
 import { CommunicateDTO, ECommunicateCode } from "@app/errors"
-import { type IController, type IRequest } from "@app/ports/presentation"
+import {
+  type IRule,
+  type IController,
+  type IRequest,
+} from "@app/ports/presentation"
 import { type GetBrand } from "@app/use-cases/brand"
 
 export class GetSearchController implements IController {
-  constructor(private readonly useCase: GetBrand) {}
+  constructor(
+    private readonly useCase: GetBrand,
+    private readonly bodyRule: IRule
+  ) {}
 
   async handle(req: IRequest): Promise<any> {
     try {
-      req.body.filter = {
-        offset: req.body.offset ? Number(req.body.offset) : 0,
-        limit: req.body.limit ? Number(req.body.limit) : 10,
-        order: req.body.order ? req.body.order : "ASC",
-      }
+      this.bodyRule.handle(req.body)
       const { name, inauguratedIn, country, filter } = req.body
 
       return {
