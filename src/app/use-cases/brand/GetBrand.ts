@@ -38,7 +38,7 @@ export class GetBrand
         : b.name.localeCompare(a.name)
     )
 
-    const brandFiltred = []
+    const brandFiltered = []
 
     for (
       let i = filter.offset * filter.limit;
@@ -46,10 +46,10 @@ export class GetBrand
       i++
     ) {
       if (brand[i] === undefined) break
-      brandFiltred.push(brand[i])
+      brandFiltered.push(brand[i])
     }
 
-    return brandFiltred
+    return brandFiltered
   }
 
   async getBrandById(data: IGetBrandByIdDTO): Promise<Brand> {

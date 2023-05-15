@@ -1,4 +1,4 @@
-import { type CommunicateDTO } from "@app/errors"
+import { CommunicateDTO } from "@app/errors"
 import { type IValidator } from "@app/ports/presentation"
 
 export class CompositeValidation implements IValidator {
@@ -7,7 +7,7 @@ export class CompositeValidation implements IValidator {
   validate(data: object): CommunicateDTO {
     for (const validation of this.validations) {
       const error = validation.validate(data)
-      if (error) return error
+      if (error instanceof CommunicateDTO) return error
     }
   }
 }
