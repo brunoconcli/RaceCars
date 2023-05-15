@@ -9,7 +9,7 @@ async function initializeServer(): Promise<void> {
       console.log("Database is running")
     })
     .catch((error) => {
-      console.log(error)
+      console.log("Error in start database:", error)
     })
 
   const app = setUpApp()

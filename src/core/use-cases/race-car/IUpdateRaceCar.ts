@@ -7,6 +7,7 @@ export interface IUpdateRaceCarDTO {
   readonly color?: RaceCar["color"]
   readonly year?: RaceCar["year"]
   readonly price?: RaceCar["price"]
+  readonly imageURL?: RaceCar["imageURL"]
 }
 
 export interface IUpdateRaceCar {

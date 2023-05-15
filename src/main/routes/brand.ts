@@ -6,13 +6,16 @@ import {
   GetAllController,
   GetSearchController,
 } from "@pre/controllers"
+import { DeleteBrandController } from "@pre/controllers/brand/delete"
+import { ParseToTypeRule, SetDefaultValueRule } from "@pre/rule"
+import { CompositeRule } from "@pre/rule/composite"
 import {
   CompositeValidation,
   RequiredAndTypeFieldValidation,
 } from "@pre/validation"
 import { Router } from "express"
 
-import { CreateBrand, GetBrand } from "@app/use-cases/brand"
+import { CreateBrand, DeleteBrand, GetBrand } from "@app/use-cases/brand"
 
 const routes = Router()
 const brandRepository = new BrandRepository()
@@ -29,11 +32,34 @@ routes.post(
     )
   )
 )
+routes.delete(
+  "/delete/:id",
+  adaptControllerExpress(
+    new DeleteBrandController(
+      new DeleteBrand(brandRepository, brandRepository),
+      new ParseToTypeRule<number>("id")
+    )
+  )
+)
 
 // GETERS
 const getBrand = new GetBrand(brandRepository, brandRepository, brandRepository)
 routes.get("/", adaptControllerExpress(new GetAllController(getBrand)))
-routes.get("/search", adaptControllerExpress(new GetSearchController(getBrand)))
+routes.get(
+  "/search",
+  adaptControllerExpress(
+    new GetSearchController(
+      getBrand,
+      new CompositeRule([
+        new SetDefaultValueRule("filter", {
+          offset: 0,
+          limit: 10,
+          order: "ASC",
+        }),
+      ])
+    )
+  )
+)
 routes.get(
   "/:id",
   adaptControllerExpress(

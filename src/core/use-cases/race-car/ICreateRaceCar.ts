@@ -6,6 +6,7 @@ export interface ICreateRaceCarDTO {
   readonly year: RaceCar["year"]
   readonly color: RaceCar["color"]
   readonly price: RaceCar["price"]
+  readonly imageURL: RaceCar["imageURL"]
 }
 
 export interface ICreateRaceCar {
