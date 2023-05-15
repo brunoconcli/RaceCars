@@ -74,19 +74,21 @@ export class BrandRepository implements IBrandRepository {
 
   async findSearch(data: IFindSearchBrandRepositoryDTO): Promise<Brand[]> {
     const connection = await getConnection()
-    const query =
+    let query =
       "SELECT * FROM Brand" +
-      (!data.country && !data.inauguratedIn && !data.name ? "" : " WHERE ") +
-      [
-        ...joinModularValues(
-          { country: data.country, name: data.name },
-          true,
-          " LIKE "
-        ),
-        data.inauguratedIn
-          ? "inauguratedIn = " + data.inauguratedIn.join(" OR ")
-          : "",
-      ].join(" AND ")
+      (!data.country && !data.inauguratedIn && !data.name ? "" : " WHERE ")
+    const add = [
+      ...joinModularValues(
+        { country: data.country, name: data.name },
+        true,
+        " LIKE "
+      ),
+    ]
+
+    if (data.inauguratedIn)
+      add.push("inauguratedIn = " + data.inauguratedIn.join(" OR "))
+
+    query += add.join(" AND ")
 
     console.log(query)
 
