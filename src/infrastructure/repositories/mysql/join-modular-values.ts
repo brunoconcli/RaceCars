@@ -1,9 +1,8 @@
 export default function joinModularValues(
   data: object,
   includeKey = true,
-  separator = ", ",
   keySeparator = " = "
-): string {
+): string[] {
   const values: string[] = []
   for (const key in data)
     if (data[key])
@@ -15,5 +14,5 @@ export default function joinModularValues(
         }`
       )
 
-  return values.join(separator)
+  return values
 }

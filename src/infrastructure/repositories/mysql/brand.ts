@@ -45,7 +45,7 @@ export class BrandRepository implements IBrandRepository {
   async update(id: number, data: Partial<Omit<Brand, "id">>): Promise<Brand> {
     const connection = await getConnection()
     const query =
-      "UPDATE Brand SET " + joinModularValues(data) + " WHERE id = ?"
+      "UPDATE Brand SET " + joinModularValues(data).join(", ") + " WHERE id = ?"
 
     await connection.execute(query, [id])
 
@@ -75,18 +75,20 @@ export class BrandRepository implements IBrandRepository {
   async findSearch(data: IFindSearchBrandRepositoryDTO): Promise<Brand[]> {
     const connection = await getConnection()
     const query =
-      "SELECT * FROM Brand WHERE " +
-      joinModularValues(
-        { country: data.country, name: data.name },
-        true,
-        " AND ",
-        " LIKE "
-      ) +
-      `${
-        Array.isArray(data.inauguratedIn)
-          ? " AND inauguratedIn = " + data.inauguratedIn.join(" OR ")
-          : ""
-      }`
+      "SELECT * FROM Brand" +
+      (!data.country && !data.inauguratedIn && !data.name ? "" : " WHERE ") +
+      [
+        ...joinModularValues(
+          { country: data.country, name: data.name },
+          true,
+          " LIKE "
+        ),
+        data.inauguratedIn
+          ? "inauguratedIn = " + data.inauguratedIn.join(" OR ")
+          : "",
+      ].join(" AND ")
+
+    console.log(query)
 
     return await connection
       .query(query)
