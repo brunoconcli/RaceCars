@@ -5,4 +5,5 @@ export interface RaceCar {
   year: number
   color: string
   price: number
+  imageURL: string
 }
