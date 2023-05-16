@@ -54,8 +54,15 @@ export class BrandRepository implements IBrandRepository {
 
   async update(id: number, data: Partial<Omit<Brand, "id">>): Promise<Brand> {
     const connection = await getConnection()
-    const query =
-      "UPDATE Brand SET " + joinModularValues(data).join(", ") + " WHERE id = ?"
+    if (!data.country && !data.name && !data.inauguratedIn)
+      throw new Error("Invalid data")
+    let query = "UPDATE Brand SET "
+
+    const add = [...joinModularValues(data)]
+
+    if (add.length < 0) throw new Error("Invalid data")
+
+    query += add.join(", ") + " WHERE id = ?"
 
     await connection.execute(query, [id])
 
@@ -96,7 +103,7 @@ export class BrandRepository implements IBrandRepository {
     ]
 
     if (data.inauguratedIn)
-      add.push(`inauguratedIn = ${data.inauguratedIn.join(" OR ") as string}`)
+      add.push(`inauguratedIn = ${data.inauguratedIn.join(" OR ")}`)
 
     query +=
       add.join(" AND ") +
@@ -107,8 +114,7 @@ export class BrandRepository implements IBrandRepository {
     return await connection
       .query(query)
       .then((results) => results[0] as Brand[])
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         throw new Error("Error on find search brands")
       })
   }
