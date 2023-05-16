@@ -8,6 +8,7 @@ import {
 } from "@pre/controllers"
 import { DeleteBrandController } from "@pre/controllers/brand/delete"
 import { UpdateController } from "@pre/controllers/brand/update"
+import { NumberConvert } from "@pre/convert"
 import { ParseToTypeRule, SetDefaultValueRule } from "@pre/rule"
 import { CompositeRule } from "@pre/rule/composite"
 import {
@@ -21,11 +22,10 @@ import { Router } from "express"
 import { CreateBrand, DeleteBrand, GetBrand } from "@app/use-cases/brand"
 import { UpdateBrand } from "@app/use-cases/brand/UpdateBrand"
 
-
 const routes = Router()
 const brandRepository = new BrandRepository()
 routes.post(
-  "/create",
+  "/",
   adaptControllerExpress(
     new CreateBrandController(
       new CreateBrand(brandRepository, brandRepository),
@@ -38,7 +38,7 @@ routes.post(
   )
 )
 routes.put(
-  "/update/:id",
+  "/:id",
   adaptControllerExpress(
     new UpdateController(
       new UpdateBrand(brandRepository, brandRepository),
@@ -47,17 +47,17 @@ routes.put(
         new TypeFieldVerification("country", "string"),
         new TypeFieldVerification("inauguratedIn", "number"),
       ]),
-      new ParseToTypeRule<number>("id"),
+      new ParseToTypeRule("id", new NumberConvert()),
       new RequiredAndTypeFieldValidation("id", "number")
     )
   )
 )
 routes.delete(
-  "/delete/:id",
+  "/:id",
   adaptControllerExpress(
     new DeleteBrandController(
       new DeleteBrand(brandRepository, brandRepository),
-      new ParseToTypeRule<number>("id")
+      new ParseToTypeRule("id", new NumberConvert())
     )
   )
 )
