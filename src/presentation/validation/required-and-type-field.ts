@@ -1,4 +1,4 @@
-import { UtilsFieldNames } from "@pre/utils"
+import { UtilsFieldName } from "@pre/utils"
 
 import { type CommunicateDTO, missingParameterError } from "@app/errors"
 import { type IValidator } from "@app/ports/presentation"
@@ -12,14 +12,14 @@ export class RequiredAndTypeFieldValidation implements IValidator {
   ) {}
 
   validate(data: object): CommunicateDTO {
-    const utilsFieldNames = new UtilsFieldNames(this.fieldName, data)
-    if (!utilsFieldNames.validateExistFieldName())
+    const utilsFieldName = new UtilsFieldName(this.fieldName, data)
+    if (!utilsFieldName.validateExistFieldName())
       return missingParameterError(this.fieldName)
     if (this.type)
       return new TypeFieldVerification(
         this.fieldName,
         this.type,
-        utilsFieldNames
+        utilsFieldName
       ).validate(data)
   }
 }
