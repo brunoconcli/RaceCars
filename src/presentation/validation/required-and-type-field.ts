@@ -1,4 +1,5 @@
-/* eslint-disable valid-typeof */
+import { UtilsFieldNames } from "@pre/utils"
+
 import { type CommunicateDTO, missingParameterError } from "@app/errors"
 import { type IValidator } from "@app/ports/presentation"
 
@@ -11,8 +12,14 @@ export class RequiredAndTypeFieldValidation implements IValidator {
   ) {}
 
   validate(data: object): CommunicateDTO {
-    if (!data[this.fieldName]) return missingParameterError(this.fieldName)
+    const utilsFieldNames = new UtilsFieldNames(this.fieldName, data)
+    if (!utilsFieldNames.validateExistFieldName())
+      return missingParameterError(this.fieldName)
     if (this.type)
-      return new TypeFieldVerification(this.fieldName, this.type).validate(data)
+      return new TypeFieldVerification(
+        this.fieldName,
+        this.type,
+        utilsFieldNames
+      ).validate(data)
   }
 }
