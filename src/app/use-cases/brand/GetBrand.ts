@@ -28,28 +28,7 @@ export class GetBrand
   }
 
   async getBrandsSearch(data: IGetBrandsSearchDTO): Promise<Brand[]> {
-    const brand = await this.findSearchBrandRepository.findSearch(data)
-
-    const filter = data.filter
-
-    brand.sort((a, b) =>
-      filter.order === "ASC"
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name)
-    )
-
-    const brandFiltered = []
-
-    for (
-      let i = filter.offset * filter.limit;
-      i < filter.offset * filter.limit + filter.limit;
-      i++
-    ) {
-      if (brand[i] === undefined) break
-      brandFiltered.push(brand[i])
-    }
-
-    return brandFiltered
+    return await this.findSearchBrandRepository.findSearch(data)
   }
 
   async getBrandById(data: IGetBrandByIdDTO): Promise<Brand> {
