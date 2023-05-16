@@ -1,9 +1,12 @@
-import { type IRule } from "@app/ports/presentation"
+import { type IRule, type IConvert } from "@app/ports/presentation"
 
-export class ParseToTypeRule<T> implements IRule {
-  constructor(private readonly fieldName: string) {}
+export class ParseToTypeRule implements IRule {
+  constructor(
+    private readonly fieldName: string,
+    private readonly convert: IConvert
+  ) {}
 
   handle(data: object): void {
-    data[this.fieldName] = data[this.fieldName] as T
+    data[this.fieldName] = this.convert.handle(data[this.fieldName])
   }
 }
