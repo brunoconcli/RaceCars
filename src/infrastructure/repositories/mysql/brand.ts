@@ -90,7 +90,7 @@ export class BrandRepository implements IBrandRepository {
 
     query += add.join(" AND ")
 
-    console.log(query)
+    // console.log(query)
 
     return await connection
       .query(query)
