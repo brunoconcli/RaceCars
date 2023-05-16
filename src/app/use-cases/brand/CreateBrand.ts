@@ -19,6 +19,12 @@ export class CreateBrand implements ICreateBrand {
         await this.findSearchBrandRepository.findSearch({
           name: data.name,
           country: data.country,
+          inauguratedIn: [data.inauguratedIn],
+          filter: {
+            order: "ASC",
+            limit: 1,
+            page: 1,
+          },
         })
       ).length > 0
     )
