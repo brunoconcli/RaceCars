@@ -25,14 +25,13 @@ export class RaceCarRepository implements IRaceCarRepository {
         name: data.name,
         brand: data.brandId,
         color: data.color,
-        year: [data.year],
-        priceMin: data.price,
+        year: [data.year]
       })).length > 0
     )
     throw new Error("Racecar already exists")
     const connection = await getConnection()
     await connection.execute(
-      "INSERT INTO RaceCar (name, brand, color, year, priceMin) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO RaceCar (name, brand, color, year, price) VALUES (?, ?, ?, ?, ?, ?)",
       [data.name, data.brandId, data.color, data.year, data.price]
     )
     return await this.findSearch({
@@ -81,11 +80,17 @@ export class RaceCarRepository implements IRaceCarRepository {
       (!data.name && !data.brand && !data.color && !data.year && !data.priceMax && !data.priceMin ? "" : " WHERE ")
       const add = [
         ...joinModularValues(
-          { name: data.name, brandId: data.brand, color: data.color, year: data.year, price: data.priceMax },
+          { name: data.name, brandId: data.brand, color: data.color, year: data.year },
           true,
           " LIKE "
         ),
       ]
+
+      if (data.priceMax)
+        add.push(`price < ${data.priceMax}`)
+      if(data.priceMin)
+        add.push(`price > ${data.priceMin}`)
+
       query += add.join(" AND ")
 
       return await connection
