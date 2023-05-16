@@ -8,10 +8,13 @@ export interface IGetBrandByIdDTO {
 }
 
 export interface IGetBrandsSearchDTO extends IFindSearchBrandRepositoryDTO {
+  country?: string
+  inauguratedIn?: number[]
+  name?: string
   readonly filter: {
     readonly order: "ASC" | "DESC"
     readonly limit: number
-    readonly offset: number
+    readonly page: number
   }
 }
 
