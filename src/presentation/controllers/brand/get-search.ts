@@ -1,20 +1,26 @@
-import { CommunicateDTO, ECommunicateCode } from "@app/errors"
+import { AdaptError } from "@pre/utils/adapt-error"
+
 import {
   type IRule,
   type IController,
   type IRequest,
+  type IValidator,
 } from "@app/ports/presentation"
 import { type GetBrand } from "@app/use-cases/brand"
 
 export class GetSearchController implements IController {
   constructor(
     private readonly useCase: GetBrand,
-    private readonly bodyRule: IRule
+    private readonly bodyRule: IRule,
+    private readonly bodyValidate: IValidator
   ) {}
 
   async handle(req: IRequest): Promise<any> {
     try {
       this.bodyRule.handle(req.body)
+      const error = this.bodyValidate.validate(req.body)
+      if (error) throw error
+
       const { name, inauguratedIn, country, filter } = req.body
 
       return {
@@ -27,17 +33,7 @@ export class GetSearchController implements IController {
         }),
       }
     } catch (error) {
-      console.log(error)
-      if (error instanceof CommunicateDTO) return error.getObjectResponse()
-
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          type: ECommunicateCode.InE,
-          date: new Date(),
-        },
-      }
+      return AdaptError(error)
     }
   }
 }

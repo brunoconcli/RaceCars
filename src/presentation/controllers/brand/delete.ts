@@ -1,4 +1,5 @@
-import { CommunicateDTO, ECommunicateCode } from "@app/errors"
+import { AdaptError } from "@pre/utils/adapt-error"
+
 import {
   type IRequest,
   type IResponse,
@@ -18,19 +19,13 @@ export class DeleteBrandController implements IController {
       this.paramRule.handle(req.params)
       await this.useCase.delete(req.params)
       return {
-        statusCode: 200,
-      }
-    } catch (error) {
-      if (error instanceof CommunicateDTO) return error.getObjectResponse()
-
-      return {
-        statusCode: 500,
+        statusCode: 201,
         body: {
-          message: "Internal server error",
-          type: ECommunicateCode.InE,
-          date: new Date(),
+          message: "Brand deleted successfully",
         },
       }
+    } catch (error) {
+      return AdaptError(error)
     }
   }
 

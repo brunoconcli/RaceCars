@@ -1,4 +1,5 @@
-import { CommunicateDTO, ECommunicateCode } from "@app/errors"
+import { AdaptError } from "@pre/utils/adapt-error"
+
 import {
   type IValidator,
   type IController,
@@ -21,16 +22,7 @@ export class GetByIdController implements IController {
         body: await this.useCase.getBrandById(req.params),
       }
     } catch (error) {
-      if (error instanceof CommunicateDTO) return error.getObjectResponse()
-
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          type: ECommunicateCode.InE,
-          date: new Date(),
-        },
-      }
+      return AdaptError(error)
     }
   }
 }

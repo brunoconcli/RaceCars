@@ -1,6 +1,6 @@
 import { type ICreateBrand } from "@core/use-cases"
+import { AdaptError } from "@pre/utils/adapt-error"
 
-import { CommunicateDTO, ECommunicateCode } from "@app/errors"
 import {
   type IRequest,
   type IResponse,
@@ -14,28 +14,19 @@ export class CreateBrandController implements IController {
     private readonly bodyValidate: IValidator
   ) {}
 
-  async handle(request: IRequest): Promise<IResponse> {
+  async handle(req: IRequest): Promise<IResponse> {
     try {
-      const error = this.bodyValidate.validate(request.body)
+      const error = this.bodyValidate.validate(req.body)
       if (error) throw error
       return {
         statusCode: 201,
         body: {
           message: "Brand created successfully",
-          data: await this.useCase.create(request.body),
+          data: await this.useCase.create(req.body),
         },
       }
     } catch (error) {
-      if (error instanceof CommunicateDTO) return error.getObjectResponse()
-
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          type: ECommunicateCode.InE,
-          date: new Date(),
-        },
-      }
+      return AdaptError(error)
     }
   }
 }
