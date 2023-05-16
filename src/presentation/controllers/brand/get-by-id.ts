@@ -1,4 +1,4 @@
-import { AdaptError } from "@pre/utils/adapt-error"
+import { AdaptError } from "@pre/utils"
 
 import {
   type IValidator,

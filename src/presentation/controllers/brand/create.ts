@@ -1,5 +1,5 @@
 import { type ICreateBrand } from "@core/use-cases"
-import { AdaptError } from "@pre/utils/adapt-error"
+import { AdaptError } from "@pre/utils"
 
 import {
   type IRequest,

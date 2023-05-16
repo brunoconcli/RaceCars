@@ -1,4 +1,4 @@
-import { AdaptError } from "@pre/utils/adapt-error"
+import { AdaptError } from "@pre/utils"
 
 import { type IController } from "@app/ports/presentation"
 import { type GetBrand } from "@app/use-cases/brand"
