@@ -1,10 +1,7 @@
 import { type IDeleteBrandRepository } from "./delete"
 import { type IFindAllBrandsRepository } from "./find-all"
 import { type IFindBrandByIdRepository } from "./find-by-id"
-import {
-  type IFindSearchBrandRepository,
-  type IFindSearchBrandRepositoryDTO,
-} from "./find-search"
+import { type IFindSearchBrandRepository } from "./find-search"
 import { type ISaveBrandRepository } from "./save"
 import { type IUpdateBrandRepository } from "./update"
 
@@ -23,5 +20,4 @@ export type {
   IFindAllBrandsRepository,
   IFindBrandByIdRepository,
   IFindSearchBrandRepository,
-  IFindSearchBrandRepositoryDTO,
 }

@@ -1,5 +1,5 @@
 import { type RaceCar } from "@core/entities"
 
-export interface IFindAllRaceCarRepository {
+export interface IFindAllRaceCarsRepository {
   findAll: () => Promise<RaceCar[]>
 }

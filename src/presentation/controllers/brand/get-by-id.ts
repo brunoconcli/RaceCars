@@ -7,7 +7,7 @@ import {
 } from "@app/ports/presentation"
 import { type GetBrand } from "@app/use-cases/brand"
 
-export class GetByIdController implements IController {
+export class GetBrandByIdController implements IController {
   constructor(
     private readonly useCase: GetBrand,
     private readonly paramsValidate: IValidator
