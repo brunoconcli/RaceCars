@@ -8,7 +8,7 @@ import {
   type IValidator,
 } from "@app/ports/presentation"
 
-export class DeleteRaceCar implements IController {
+export class DeleteRaceCarController implements IController {
   constructor(
     private readonly useCase: IDeleteRaceCar,
     private readonly paramValidator: IValidator
