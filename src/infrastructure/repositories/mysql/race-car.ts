@@ -39,7 +39,6 @@ export class RaceCarRepository implements IRaceCarRepository {
       brand: data.brandId,
       color: data.color,
       year: [data.year],
-      priceMin: data.price,
     })[0]
   }
 
