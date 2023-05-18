@@ -9,7 +9,7 @@ import {
 
 import {
   type IFindRaceCarByIdRepository,
-  type IFindAllRaceCarRepository,
+  type IFindAllRaceCarsRepository,
   type IFindSearchRaceCarRepository,
 } from "@app/ports/repositories"
 
@@ -19,7 +19,7 @@ export class GetRaceCar
   constructor(
     private readonly findRaceCarByIdRepository: IFindRaceCarByIdRepository,
     private readonly findSearchRaceCarsRepository: IFindSearchRaceCarRepository,
-    private readonly findAllRaceCarsRepository: IFindAllRaceCarRepository
+    private readonly findAllRaceCarsRepository: IFindAllRaceCarsRepository
   ) {}
 
   async getAllRaceCars(): Promise<RaceCar[]> {

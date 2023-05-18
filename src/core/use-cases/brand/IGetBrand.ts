@@ -1,13 +1,10 @@
 import { type Brand } from "@core/entities"
 
-import { type IFindSearchBrandRepositoryDTO } from "@app/ports/repositories"
-
-
 export interface IGetBrandByIdDTO {
   readonly id: Brand["id"]
 }
 
-export interface IGetBrandsSearchDTO extends IFindSearchBrandRepositoryDTO {
+export interface IGetBrandsSearchDTO {
   country?: string
   inauguratedIn?: number[]
   name?: string
