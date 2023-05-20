@@ -4,6 +4,12 @@ export interface IGetRaceCarByIdDTO {
   readonly id: RaceCar["id"]
 }
 export interface IGetRaceCarsSearchDTO {
+  name?: string
+  brand?: number
+  color?: string
+  year?: number[]
+  priceMax?: number
+  priceMin?: number
   readonly filter: {
     readonly order: "ASC" | "DESC"
     readonly limit: number
