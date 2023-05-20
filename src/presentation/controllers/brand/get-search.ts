@@ -8,7 +8,7 @@ import {
 } from "@app/ports/presentation"
 import { type GetBrand } from "@app/use-cases/brand"
 
-export class GetSearchController implements IController {
+export class GetBrandsSearchController implements IController {
   constructor(
     private readonly useCase: GetBrand,
     private readonly bodyRule: IRule,

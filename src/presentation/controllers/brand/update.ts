@@ -9,7 +9,7 @@ import {
 } from "@app/ports/presentation"
 import { type UpdateBrand } from "@app/use-cases/brand/UpdateBrand"
 
-export class UpdateController implements IController {
+export class UpdateBrandController implements IController {
   constructor(
     private readonly useCase: UpdateBrand,
     private readonly bodyValidate: IValidator,

@@ -2,12 +2,12 @@ import { BrandRepository } from "@infra/repositories"
 import { adaptControllerExpress } from "@main/adapters/express/controller-adapter"
 import {
   CreateBrandController,
-  GetByIdController,
-  GetAllController,
-  GetSearchController,
+  GetBrandByIdController,
+  GetAllBrandsController,
+  GetBrandsSearchController,
 } from "@pre/controllers"
 import { DeleteBrandController } from "@pre/controllers/brand/delete"
-import { UpdateController } from "@pre/controllers/brand/update"
+import { UpdateBrandController } from "@pre/controllers/brand/update"
 import { NumberConvert } from "@pre/convert"
 import { ParseToTypeRule, SetDefaultValueRule } from "@pre/rule"
 import { CompositeRule } from "@pre/rule/composite"
@@ -40,7 +40,7 @@ routes.post(
 routes.put(
   "/:id",
   adaptControllerExpress(
-    new UpdateController(
+    new UpdateBrandController(
       new UpdateBrand(brandRepository, brandRepository),
       new CompositeValidation([
         new TypeFieldVerification("name", "string"),
@@ -63,11 +63,11 @@ routes.delete(
 )
 
 const getBrand = new GetBrand(brandRepository, brandRepository, brandRepository)
-routes.get("/", adaptControllerExpress(new GetAllController(getBrand)))
+routes.get("/", adaptControllerExpress(new GetAllBrandsController(getBrand)))
 routes.get(
   "/search",
   adaptControllerExpress(
-    new GetSearchController(
+    new GetBrandsSearchController(
       getBrand,
       new CompositeRule([
         new SetDefaultValueRule("filter", {
@@ -92,7 +92,7 @@ routes.get(
 routes.get(
   "/:id",
   adaptControllerExpress(
-    new GetByIdController(getBrand, new RequiredAndTypeFieldValidation("id"))
+    new GetBrandByIdController(getBrand, new RequiredAndTypeFieldValidation("id"))
   )
 )
 
