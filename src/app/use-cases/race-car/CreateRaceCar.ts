@@ -19,6 +19,11 @@ export class CreateRaceCar implements ICreateRaceCar {
         brand: data.brandId,
         year: [data.year],
         color: data.color,
+        filter: {
+          order: "ASC",
+          limit: 0,
+          offset: 0
+        }
       })
     )
       throw new Error("This car already exists")

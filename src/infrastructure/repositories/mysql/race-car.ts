@@ -1,9 +1,9 @@
 import { type RaceCar } from "@core/entities"
+import { type IGetRaceCarsSearchDTO } from "@core/use-cases"
 import { getConnection } from "@infra/providers/mysql-connection"
 
 import {
   type IRaceCarRepository,
-  type IFindSearchRaceCarRepositoryDTO,
 } from "@app/ports/repositories"
 
 import joinModularValues from "./join-modular-values"
@@ -25,7 +25,12 @@ export class RaceCarRepository implements IRaceCarRepository {
         name: data.name,
         brand: data.brandId,
         color: data.color,
-        year: [data.year]
+        year: [data.year],
+        filter: {
+          order: "ASC",
+          limit: 0,
+          offset: 0
+        }
       })).length > 0
     )
     throw new Error("Racecar already exists")
@@ -39,6 +44,11 @@ export class RaceCarRepository implements IRaceCarRepository {
       brand: data.brandId,
       color: data.color,
       year: [data.year],
+      filter: {
+        order: "ASC",
+        limit: 0,
+        offset: 0
+      }
     })[0]
   }
 
@@ -72,7 +82,7 @@ export class RaceCarRepository implements IRaceCarRepository {
     })
   }
 
-  async findSearch(data: IFindSearchRaceCarRepositoryDTO): Promise<RaceCar[]> {
+  async findSearch(data: IGetRaceCarsSearchDTO): Promise<RaceCar[]> {
     const connection = await getConnection()
     let query =
       "SELECT * FROM RaceCar" +
