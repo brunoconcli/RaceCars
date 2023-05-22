@@ -28,5 +28,4 @@ export class DeleteBrandController implements IController {
       return AdaptError(error)
     }
   }
-
 }

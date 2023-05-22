@@ -92,7 +92,10 @@ routes.get(
 routes.get(
   "/:id",
   adaptControllerExpress(
-    new GetBrandByIdController(getBrand, new RequiredAndTypeFieldValidation("id"))
+    new GetBrandByIdController(
+      getBrand,
+      new RequiredAndTypeFieldValidation("id")
+    )
   )
 )
 

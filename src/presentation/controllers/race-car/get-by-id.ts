@@ -1,11 +1,11 @@
-import { type GetRaceCar } from "@app/use-cases/race-car/GetRaceCar"
 import { AdaptError } from "@pre/utils"
 
 import {
-    type IValidator,
-    type IRequest,
-    type IController,
+  type IValidator,
+  type IRequest,
+  type IController,
 } from "@app/ports/presentation"
+import { type GetRaceCar } from "@app/use-cases/race-car/GetRaceCar"
 
 export class GetRaceCarByIdController implements IController {
   constructor(

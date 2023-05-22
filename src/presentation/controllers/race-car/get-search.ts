@@ -1,30 +1,31 @@
-import { IGetRaceCarsSearch } from "@core/use-cases";
-import { AdaptError } from "@pre/utils";
-import { 
-    type IController, 
-    type IValidator, 
-    type IRequest,
-    type IRule,
-} from "@app/ports/presentation";
+import { type IGetRaceCarsSearch } from "@core/use-cases"
+import { AdaptError } from "@pre/utils"
+
+import {
+  type IController,
+  type IValidator,
+  type IRequest,
+  type IRule,
+} from "@app/ports/presentation"
 
 export class GetRaceCarsSearchController implements IController {
-    constructor(
-        private readonly useCase: IGetRaceCarsSearch,
-        private readonly bodyRule: IRule,
-        private readonly bodyValidator: IValidator,
-    ){}
+  constructor(
+    private readonly useCase: IGetRaceCarsSearch,
+    private readonly bodyRule: IRule,
+    private readonly bodyValidator: IValidator
+  ) {}
 
-    async handle(req: IRequest): Promise<any> {
-        try {
-            this.bodyRule.handle(req.params)
-            const error = this.bodyValidator.validate(req.body)
-            if(error) throw error
-            return {
-                statusCode: 200,
-                body: await this.useCase.getRaceCarsSearch(req.params),
-            }
-        } catch(error) {
-            return AdaptError(error)
-        }
+  async handle(req: IRequest): Promise<any> {
+    try {
+      this.bodyRule.handle(req.params)
+      const error = this.bodyValidator.validate(req.body)
+      if (error) throw error
+      return {
+        statusCode: 200,
+        body: await this.useCase.getRaceCarsSearch(req.params),
+      }
+    } catch (error) {
+      return AdaptError(error)
     }
+  }
 }
