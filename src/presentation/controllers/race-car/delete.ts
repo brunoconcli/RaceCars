@@ -5,19 +5,18 @@ import {
   type IRequest,
   type IResponse,
   type IController,
-  type IValidator,
+  type IRule,
 } from "@app/ports/presentation"
 
 export class DeleteRaceCarController implements IController {
   constructor(
     private readonly useCase: IDeleteRaceCar,
-    private readonly paramValidator: IValidator
+    private readonly paramRule: IRule
   ) {}
 
   async handle(req: IRequest): Promise<IResponse> {
     try {
-      const error = this.paramValidator.validate(req.params)
-      if (error) throw error
+      this.paramRule.handle(req.params)
       await this.useCase.delete(req.params)
       return {
         statusCode: 201,
