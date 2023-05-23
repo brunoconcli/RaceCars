@@ -18,6 +18,15 @@ export class RaceCarRepository implements IRaceCarRepository {
   }
 
   async save(data: Omit<RaceCar, "id">): Promise<RaceCar> {
+    if (
+      await this.findSearch({
+          name: data.name,
+          brand: data.brandId,
+          color: data.color,
+          year: data.year,
+          
+        })
+      )
     const connection = await getConnection()
     await connection.execute(
       "INSERT INTO RaceCar (name, brandId, color, year, price, imageURL) VALUES (?, ?, ?, ?, ?, ?)",
@@ -36,9 +45,9 @@ export class RaceCarRepository implements IRaceCarRepository {
       color: data.color,
       year: [data.year],
       filter: {
-        order: "ASC",
         limit: 0,
         page: 0,
+        order: "ASC",
       },
     })[0]
   }

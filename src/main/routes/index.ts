@@ -4,7 +4,7 @@ import { Router } from "express"
 import { CommunicateDTO, ECommunicateCode } from "@app/errors"
 
 import brand from "./brand"
-import raceCar from "./raceCar"
+import raceCar from "./race-car"
 
 const routes = Router()
 

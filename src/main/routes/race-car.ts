@@ -87,9 +87,9 @@ routes.get(
       getRaceCar,
       new CompositeRule([
         new SetDefaultValueRule("filter", {
-          order: "ASC",
           page: 1,
           limit: 10,
+          order: "ASC",
         }),
       ]),
       new CompositeValidation([
