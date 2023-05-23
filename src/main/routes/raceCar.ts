@@ -35,10 +35,11 @@ routes.post(
       new CreateRaceCar(raceCarRepository, raceCarRepository),
       new CompositeValidation([
         new RequiredAndTypeFieldValidation("name", "string"),
-        new RequiredAndTypeFieldValidation("brand", "number"),
+        new RequiredAndTypeFieldValidation("brandId", "number"),
         new RequiredAndTypeFieldValidation("color", "string"),
         new RequiredAndTypeFieldValidation("year", "number"),
         new RequiredAndTypeFieldValidation("price", "number"),
+        new RequiredAndTypeFieldValidation("imageURL", "string"),
       ])
     )
   )
@@ -50,10 +51,11 @@ routes.put(
       new UpdateRaceCar(raceCarRepository, raceCarRepository),
       new CompositeValidation([
         new TypeFieldVerification("name", "string"),
-        new TypeFieldVerification("brand", "number"),
+        new TypeFieldVerification("brandId", "number"),
         new TypeFieldVerification("color", "string"),
         new TypeFieldVerification("year", "number"),
         new TypeFieldVerification("price", "number"),
+        new TypeFieldVerification("imageURL", "string"),
       ]),
       new RequiredAndTypeFieldValidation("id", "number"),
       new ParseToTypeRule("id", new NumberConvert())
@@ -85,9 +87,9 @@ routes.get(
       getRaceCar,
       new CompositeRule([
         new SetDefaultValueRule("filter", {
+          order: "ASC",
           page: 1,
           limit: 10,
-          order: "ASC",
         }),
       ]),
       new CompositeValidation([
@@ -97,7 +99,7 @@ routes.get(
         new RequiredAndTypeFieldValidation("filter.order", "string"),
         new DefaultValueValidation("filter.order", ["ASC", "DESC"]),
         new TypeFieldVerification("name", "string"),
-        new TypeFieldVerification("brand", "number"),
+        new TypeFieldVerification("brandId", "number"),
         new TypeFieldVerification("color", "string"),
         new TypeFieldVerification("year", "number"),
         new TypeFieldVerification("priceMax", "number"),

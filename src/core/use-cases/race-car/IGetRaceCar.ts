@@ -13,7 +13,7 @@ export interface IGetRaceCarsSearchDTO {
   readonly filter: {
     readonly order: "ASC" | "DESC"
     readonly limit: number
-    readonly offset: number
+    readonly page: number
   }
 }
 

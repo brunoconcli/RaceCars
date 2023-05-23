@@ -17,7 +17,7 @@ export class GetRaceCarsSearchController implements IController {
 
   async handle(req: IRequest): Promise<any> {
     try {
-      this.bodyRule.handle(req.params)
+      this.bodyRule.handle(req.body)
       const error = this.bodyValidator.validate(req.body)
       if (error) throw error
       return {
@@ -25,6 +25,7 @@ export class GetRaceCarsSearchController implements IController {
         body: await this.useCase.getRaceCarsSearch(req.params),
       }
     } catch (error) {
+      console.log(error)
       return AdaptError(error)
     }
   }

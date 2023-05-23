@@ -13,21 +13,10 @@ export class CreateRaceCar implements ICreateRaceCar {
   ) {}
 
   async create(data: ICreateRaceCarDTO): Promise<RaceCar> {
-    if (
-      await this.findSearchRaceCarRepository.findSearch({
-        name: data.name,
-        brand: data.brandId,
-        year: [data.year],
-        color: data.color,
-        filter: {
-          order: "ASC",
-          limit: 0,
-          offset: 0
-        }
-      })
-    )
-      throw new Error("This car already exists")
-
-    return await this.saveRaceCarRepository.save(data)
+    try {
+      return await this.saveRaceCarRepository.save(data)
+    } catch (error) {
+      throw new Error(error.message)
+    }
   }
 }

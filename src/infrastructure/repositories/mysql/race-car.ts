@@ -13,31 +13,22 @@ export class RaceCarRepository implements IRaceCarRepository {
       .execute("DELETE * FROM RaceCar WHERE id = ?", [id])
       .then(() => {})
       .catch(() => {
-        throw new Error("Error on delete racecar")
+        throw new Error("Error on delete race-car")
       })
   }
 
   async save(data: Omit<RaceCar, "id">): Promise<RaceCar> {
-    if (
-      (
-        await this.findSearch({
-          name: data.name,
-          brand: data.brandId,
-          color: data.color,
-          year: [data.year],
-          filter: {
-            order: "ASC",
-            limit: 0,
-            offset: 0,
-          },
-        })
-      ).length > 0
-    )
-      throw new Error("Racecar already exists")
     const connection = await getConnection()
     await connection.execute(
-      "INSERT INTO RaceCar (name, brand, color, year, price) VALUES (?, ?, ?, ?, ?, ?)",
-      [data.name, data.brandId, data.color, data.year, data.price]
+      "INSERT INTO RaceCar (name, brandId, color, year, price, imageURL) VALUES (?, ?, ?, ?, ?, ?)",
+      [
+        data.name,
+        data.brandId,
+        data.color,
+        data.year,
+        data.price,
+        data.imageURL,
+      ]
     )
     return await this.findSearch({
       name: data.name,
@@ -47,7 +38,7 @@ export class RaceCarRepository implements IRaceCarRepository {
       filter: {
         order: "ASC",
         limit: 0,
-        offset: 0,
+        page: 0,
       },
     })[0]
   }
@@ -106,7 +97,7 @@ export class RaceCarRepository implements IRaceCarRepository {
           name: data.name,
           brandId: data.brand,
           color: data.color,
-          year: [data.year],
+          year: data.year,
         },
         true,
         " LIKE "
@@ -116,13 +107,21 @@ export class RaceCarRepository implements IRaceCarRepository {
     if (data.priceMax) add.push(`price < ${data.priceMax}`)
     if (data.priceMin) add.push(`price > ${data.priceMin}`)
 
-    query += add.join(" AND ")
+    console.log(data)
+
+    query +=
+      add.join(" AND ") +
+      ` ORDER BY name, country, inauguratedIn ${data.filter.order} LIMIT ${
+        data.filter.limit
+      } OFFSET ${(data.filter.page - 1) * data.filter.limit}`
+
+    console.log(query)
 
     return await connection
       .query(query)
       .then((results) => results[0] as RaceCar[])
       .catch(() => {
-        throw new Error("Error on find search racecar")
+        throw new Error("Error on find search race-car")
       })
   }
 }
