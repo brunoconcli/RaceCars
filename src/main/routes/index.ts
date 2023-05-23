@@ -9,7 +9,7 @@ import raceCar from "./raceCar"
 const routes = Router()
 
 routes.use(["/brand", "/brands"], brand)
-routes.use(["/raceCar", "/raceCars"], raceCar)
+routes.use(["/race-car", "/race-cars"], raceCar)
 
 routes.use("*", (req, res) => {
   adaptResponseExpress(
