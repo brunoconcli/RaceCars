@@ -5,7 +5,7 @@ import {
   type IRequest,
   type IController,
 } from "@app/ports/presentation"
-import { type GetRaceCar } from "@app/use-cases/race-car/GetRaceCar"
+import { type GetRaceCar } from "@app/use-cases/race-car/get-race-car-use-case"
 
 export class GetRaceCarByIdController implements IController {
   constructor(

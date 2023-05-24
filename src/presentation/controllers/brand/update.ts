@@ -7,7 +7,7 @@ import {
   type IValidator,
   type IRule,
 } from "@app/ports/presentation"
-import { type UpdateBrand } from "@app/use-cases/brand/UpdateBrand"
+import { type UpdateBrand } from "@app/use-cases/brand/update-brand-use-case."
 
 export class UpdateBrandController implements IController {
   constructor(

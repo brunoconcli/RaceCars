@@ -20,7 +20,7 @@ import {
 import { Router } from "express"
 
 import { CreateBrand, DeleteBrand, GetBrand } from "@app/use-cases/brand"
-import { UpdateBrand } from "@app/use-cases/brand/UpdateBrand"
+import { UpdateBrand } from "@app/use-cases/brand/update-brand-use-case."
 
 const routes = Router()
 const brandRepository = new BrandRepository()
