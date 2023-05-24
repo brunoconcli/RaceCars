@@ -20,9 +20,21 @@ export class GetRaceCarsSearchController implements IController {
       this.bodyRule.handle(req.body)
       const error = this.bodyValidator.validate(req.body)
       if (error) throw error
+
+      const { name, brandId, color, year, priceMax, priceMin, filter } =
+        req.body
+
       return {
         statusCode: 200,
-        body: await this.useCase.getRaceCarsSearch(req.params),
+        body: await this.useCase.getRaceCarsSearch({
+          name,
+          brandId,
+          color,
+          year,
+          priceMax,
+          priceMin,
+          filter,
+        }),
       }
     } catch (error) {
       console.log(error)

@@ -19,14 +19,22 @@ export class RaceCarRepository implements IRaceCarRepository {
 
   async save(data: Omit<RaceCar, "id">): Promise<RaceCar> {
     if (
-      await this.findSearch({
+      (
+        await this.findSearch({
           name: data.name,
-          brand: data.brandId,
+          brandId: data.brandId,
           color: data.color,
-          year: data.year,
-          
+          year: [data.year],
+          filter: {
+            order: "ASC",
+            limit: 1,
+            page: 1,
+          },
         })
-      )
+      ).length > 0
+    )
+      throw new Error("Race car already exists")
+
     const connection = await getConnection()
     await connection.execute(
       "INSERT INTO RaceCar (name, brandId, color, year, price, imageURL) VALUES (?, ?, ?, ?, ?, ?)",
@@ -41,7 +49,7 @@ export class RaceCarRepository implements IRaceCarRepository {
     )
     return await this.findSearch({
       name: data.name,
-      brand: data.brandId,
+      brandId: data.brandId,
       color: data.color,
       year: [data.year],
       filter: {
@@ -89,11 +97,12 @@ export class RaceCarRepository implements IRaceCarRepository {
   }
 
   async findSearch(data: IGetRaceCarsSearchDTO): Promise<RaceCar[]> {
+    console.log(data)
     const connection = await getConnection()
     let query =
       "SELECT * FROM RaceCar" +
       (!data.name &&
-      !data.brand &&
+      !data.brandId &&
       !data.color &&
       !data.year &&
       !data.priceMax &&
@@ -104,7 +113,7 @@ export class RaceCarRepository implements IRaceCarRepository {
       ...joinModularValues(
         {
           name: data.name,
-          brandId: data.brand,
+          brandId: data.brandId,
           color: data.color,
           year: data.year,
         },
@@ -117,12 +126,11 @@ export class RaceCarRepository implements IRaceCarRepository {
     if (data.priceMin) add.push(`price > ${data.priceMin}`)
 
     console.log(data)
-
     query +=
       add.join(" AND ") +
-      ` ORDER BY name, country, inauguratedIn ${data.filter.order} LIMIT ${
-        data.filter.limit
-      } OFFSET ${(data.filter.page - 1) * data.filter.limit}`
+      ` ORDER BY name ${data.filter.order} LIMIT ${data.filter.limit} OFFSET ${
+        (data.filter.page - 1) * data.filter.limit
+      }`
 
     console.log(query)
 
