@@ -5,7 +5,7 @@ export interface IGetRaceCarByIdDTO {
 }
 export interface IGetRaceCarsSearchDTO {
   name?: string
-  brand?: number
+  brandId?: number
   color?: string
   year?: number[]
   priceMax?: number
