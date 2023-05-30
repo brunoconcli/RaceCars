@@ -10,7 +10,7 @@ export class RaceCarRepository implements IRaceCarRepository {
   async delete(id: number): Promise<void> {
     const connection = await getConnection()
     await connection
-      .execute("DELETE * FROM RaceCar WHERE id = ?", [id])
+      .execute("DELETE FROM RaceCar WHERE id = ?", [id])
       .then(() => {})
       .catch(() => {
         throw new Error("Error on delete race-car")

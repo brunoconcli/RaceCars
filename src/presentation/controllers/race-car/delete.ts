@@ -25,6 +25,7 @@ export class DeleteRaceCarController implements IController {
         },
       }
     } catch (error) {
+      console.log(error)
       return AdaptError(error)
     }
   }

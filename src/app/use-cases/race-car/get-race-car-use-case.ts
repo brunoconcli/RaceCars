@@ -23,15 +23,25 @@ export class GetRaceCar
   ) {}
 
   async getAllRaceCars(): Promise<RaceCar[]> {
-    return await this.findAllRaceCarsRepository.findAll()
+    return (await this.findAllRaceCarsRepository.findAll()).map((value) => {
+      value.color = "#" + value.color
+      return value
+    })
   }
 
   async getRaceCarsSearch(data: IGetRaceCarsSearchDTO): Promise<RaceCar[]> {
-    return await this.findSearchRaceCarsRepository.findSearch(data)
+    return (await this.findSearchRaceCarsRepository.findSearch(data)).map(
+      (value) => {
+        value.color = "#" + value.color
+        return value
+      }
+    )
   }
 
   async getRaceCarById(data: IGetRaceCarByIdDTO): Promise<RaceCar> {
     const raceCar = await this.findRaceCarByIdRepository.findById(data.id)
+
+    raceCar.color = "#" + raceCar.color
 
     if (!raceCar) throw new Error("The car passed does not exist")
 
