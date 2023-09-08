@@ -1,22 +1,20 @@
-import { type RaceCar } from "@core/entities"
-import { type ICreateRaceCar, type ICreateRaceCarDTO } from "@core/use-cases"
+import { type IDeleteRaceCarDTO, type IDeleteRaceCar } from "@core/use-cases"
 
 import {
-  type IFindSearchRaceCarRepository,
-  type ISaveRaceCarRepository,
-} from "@app/ports/repositories/race-car"
+  type IDeleteRaceCarRepository,
+  type IFindRaceCarByIdRepository,
+} from "@app/ports/repositories"
 
-export class CreateRaceCar implements ICreateRaceCar {
+export class DeleteRaceCar implements IDeleteRaceCar {
   constructor(
-    private readonly findSearchRaceCarRepository: IFindSearchRaceCarRepository,
-    private readonly saveRaceCarRepository: ISaveRaceCarRepository
+    private readonly findRaceCarByIdRepository: IFindRaceCarByIdRepository,
+    private readonly deleteRaceCarRepository: IDeleteRaceCarRepository
   ) {}
 
-  async create(data: ICreateRaceCarDTO): Promise<RaceCar> {
-    try {
-      return await this.saveRaceCarRepository.save(data)
-    } catch (error) {
-      throw new Error(error.message)
-    }
+  async delete(data: IDeleteRaceCarDTO): Promise<void> {
+    if (!(await this.findRaceCarByIdRepository.findById(data.id)))
+      throw new Error("The car id passed does not exist")
+
+    await this.deleteRaceCarRepository.delete(data.id)
   }
 }
